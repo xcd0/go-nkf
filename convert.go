@@ -14,7 +14,7 @@ import (
 
 var errDet = errors.New("Couldn't detect")
 
-func charDet(b []byte) (string, error) {
+func CharDet(b []byte) (string, error) {
 	d := chardet.NewTextDetector()
 	res, err := d.DetectBest(b)
 	if err != nil {
@@ -34,7 +34,7 @@ func charDet(b []byte) (string, error) {
 	}
 }
 
-func toUtf8(str string, in string) (string, error) {
+func ToUtf8(str string, in string) (string, error) {
 	var u8 []byte
 	var err error
 	switch in {
@@ -55,7 +55,7 @@ func toUtf8(str string, in string) (string, error) {
 	return string(u8), err
 }
 
-func toSjis(str string) (string, error) {
+func ToSjis(str string) (string, error) {
 	sjis, err := ioutil.ReadAll(transform.NewReader(strings.NewReader(str), japanese.ShiftJIS.NewEncoder()))
 	if err != nil {
 		return "", err
@@ -63,7 +63,7 @@ func toSjis(str string) (string, error) {
 	return string(sjis), err
 }
 
-func toEuc(str string) (string, error) {
+func ToEuc(str string) (string, error) {
 	euc, err := ioutil.ReadAll(transform.NewReader(strings.NewReader(str), japanese.EUCJP.NewEncoder()))
 	if err != nil {
 		return "", err
@@ -71,7 +71,7 @@ func toEuc(str string) (string, error) {
 	return string(euc), err
 }
 
-func toJis(str string) (string, error) {
+func ToJis(str string) (string, error) {
 	jis, err := ioutil.ReadAll(transform.NewReader(strings.NewReader(str), japanese.ISO2022JP.NewEncoder()))
 	if err != nil {
 		return "", err
@@ -79,7 +79,7 @@ func toJis(str string) (string, error) {
 	return string(jis), err
 }
 
-func nlRep(str string, nl string) string {
+func TlRep(str string, nl string) string {
 	rep := regexp.MustCompile(`\r\n|\r|\n`)
 	switch nl {
 	case "UNIX":
