@@ -79,7 +79,7 @@ func ToJis(str string) (string, error) {
 	return string(jis), err
 }
 
-func TlRep(str string, nl string) string {
+func NlRep(str string, nl string) string {
 	rep := regexp.MustCompile(`\r\n|\r|\n`)
 	switch nl {
 	case "UNIX":
@@ -100,7 +100,7 @@ func Guess(file *os.File) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	det, err := charDet(input)
+	det, err := CharDet(input)
 	return det, err
 }
 
@@ -113,26 +113,26 @@ func Convert(file *os.File, in string, out string, nl string) (string, error) {
 		return "", err
 	}
 	if in == "" {
-		in, err = charDet(input)
+		in, err = CharDet(input)
 		if err != nil {
 			return "", err
 		}
 	}
-	u8, err := toUtf8(string(input), in)
+	u8, err := ToUtf8(string(input), in)
 	if err != nil {
 		return "", err
 	}
 	if nl != "" {
-		u8 = nlRep(u8, nl)
+		u8 = NlRep(u8, nl)
 	}
 	var output string
 	switch out {
 	case "ISO2022JP":
-		output, err = toJis(u8)
+		output, err = ToJis(u8)
 	case "ShiftJIS":
-		output, err = toSjis(u8)
+		output, err = ToSjis(u8)
 	case "EUCJP":
-		output, err = toEuc(u8)
+		output, err = ToEuc(u8)
 	case "UTF8":
 		output = u8
 	}
